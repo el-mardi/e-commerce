@@ -2,7 +2,13 @@
 
 @section('body-content')
 
+
     <div class="offset-md-3 mt-5">
+        @if (session('new-user'))
+        <div class="alert alert-success border border-dark col-md-8 mb-3">
+            {{ session('new-user') }}
+        </div>
+        @endif
         <h3><b><u>Log in</u></b></h3>
         <form action="" method="">
             @csrf

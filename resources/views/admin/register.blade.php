@@ -1,13 +1,14 @@
-@extends('master.main')
+@extends('master.admin_main')
 
-@section('body-content')
+@section('admin-body-content')
 
+<br>
 <div class="offset-md-3 mt-5">
     <h3><b><u>Register</u></b></h3>
-    <form action="{{ route('user.store') }}" method="POST">
+    <form action="{{ route('admin.store') }}" method="POST">
         @csrf
 
-        <div class="row mb-4 mt-3">
+        <div class="row mb-4 mt-5">
             <div class="col-sm-4">
                 <input class="form-control  @error('firstname') is-invalid @enderror" name="firstname" value="{{old('firstname')}}" type="text" placeholder="First Name">
                 @if ($errors->has('firstname'))

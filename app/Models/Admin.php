@@ -9,22 +9,11 @@ class Admin extends Model
 {
     use HasFactory;
 
-    protected $fillable [
-
+    protected $fillable = [
         'nom',
         'prenom',
         'gsm',
         'email',
         'password',
-    ];
-
-    protected $hidden[
-
-        'password',
-        'remember_token',
-    ];
-
-    protected $casts = [
-        'email_verified_at' => 'datetime',
     ];
 }

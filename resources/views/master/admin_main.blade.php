@@ -22,72 +22,42 @@
         <style>
             body {
                 font-family: 'Times New Roman';
-                
             }
-            
         </style>
     </head>
     <body class="my-2">
 
 
-      <nav class="navbar fixed-top navbar-expand-lg  navbar-dark shadow mb-3 " style="background-color: #0a9789; height:1.6cm">
+      <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark shadow">
           <ul class="navbar-nav ">
             <li class="nav-item active" style="margin-left: 4%; margin-right: 35%">
-              <a class="nav-link" href="/"><i class="fas fa-warehouse fa-lg"></i> </a>
+              <a class="nav-link" href="/dashboard"><i class="fas fa-warehouse fa-lg"></i> </a>
             </li>
             <li class="nav-item">
               {{-- <i class="fas fa-search"></i>  --}}
               <input class="form-control " type="search" placeholder="Search" aria-label="Search" style="font-family:serif; width: 15cm; height:1cm;">
           </li>
-          @if (session('user'))
-          <li class="nav-item" style="margin-left: 10%">
-                <a class="nav-link" href=""><i class="fas fa-user fa-lg"></i>
-                  {{-- {{ auth()->user()->firstname }} --}}
-                </i></a>
+          @if (session('admin'))
+          
+              <li class="nav-item" style="margin-left:35% ">
+                <a class="nav-link" href=""><i class="fas fa-user-circle  fa-lg"></i></a>
               </li>
-
               <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fas fa-bell fa-lg"></i></a>
-              </li>
-
-              <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fas fa-shopping-cart fa-lg"></i></a>
-              </li>
-
-              <li class="nav-item " >
-                <a class="nav-link" href="/logout"><i class="fas fa-power-off fa-lg"></i></a>
+                <a class="nav-link" href="/adminPanel/logout"><i class="fas fa-power-off fa-lg"></i></a>
               </li>
           @else
-              <li class="nav-item" style="margin-left: 30%">
-                <a class="nav-link" href="{{route('user.create')}}"><i class="fas fa-user-plus fa-lg"></i></a>
+              <li class="nav-item" style="margin-left:30% ">
+                <a class="nav-link" href={{route('admin.create')}}>Register</a>
               </li>
-              <li class="nav-item mr-3">
-                <a class="nav-link" href="/login"><i class="fas fa-sign-in-alt fa-lg"></i></i></a>
+              <li class="nav-item">
+                <a class="nav-link" href="/adminPanel/login">LogIn</a>
               </li>
           @endif
-      </nav>
-      <br>
+             
+      </nav><br>
 
-       <nav class="navbar navbar-expand-lg navbar-light bg-light border border-1 mt-5 mb-2 " >
-    
-          <ul class="navbar-nav" style="margin-left:35%">
-            <li class="nav-item active">
-              <a class="nav-link" href="#"> <b>Home</b> </i> </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">categories</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Shop</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">About us</a>
-            </li>
-            
-      </nav>
-
-       <div class='container'>
-            @yield('body-content') 
+       <div class='container mt-5'>
+            @yield('admin-body-content') 
         </div>
 
     
