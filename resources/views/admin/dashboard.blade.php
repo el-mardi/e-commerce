@@ -6,7 +6,8 @@
     <div class="alert alert-success">
         {{ session('success') }}
     </div>
-    @endif
+    @endif 
+
 <div class="row">
         
     <nav class="col-sm-3 rounded-3 shadow border border-secondary border-2 mt-4" style=" position: absolute; left:2px; background-color:rgb(196, 196, 196)">
@@ -51,7 +52,7 @@
         @yield('dashboard-content')
     @else
         <h5 class="mt-5" style="text-align: center; font-size:x-large"><u>Welcome admin {{session('admin')->nom}}</u></h5>
-        <p style="text-align: center">you can log out <a href="#" style="color: red"><u>Here</u></a>.</p>
+        <p style="text-align: center">you can log out <a href="{{route('addminLogout')}}" style="color: red"><u>Here</u></a>.</p>
     @endif
     </div>
      

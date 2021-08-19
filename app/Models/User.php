@@ -13,11 +13,13 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+
     public function commande()
     {
         return $this->hasOne(Commande::class);
     }
 
+    protected $pimarykey= 'id_user';
    
 
     /**

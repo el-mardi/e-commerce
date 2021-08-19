@@ -38,6 +38,7 @@ Route::post('/adminPanel/login',[AdminController::class ,'addminLoginValidation'
 Route::get('/adminPanel/logout',[AdminController::class ,'logout'])->name('addminLogout');
 
 // dashboard
+Route::resource('admin',AdminController::class)->only('create');
 
 
 Route::middleware([CheckAuth::class])->group(function () {
@@ -51,7 +52,7 @@ Route::middleware([CheckAuth::class])->group(function () {
     Route::get('/dashboard/markdown',[MarkDownController::class,'home'])->name('markdownHome');
     Route::get('/dashboard/picture',[PictureController::class,'home'])->name('pictureHome');
     Route::resource('category',CategoryController::class);
-    Route::resource('admin',AdminController::class);
+    Route::resource('admin',AdminController::class)->except('create');
 
    
 });
