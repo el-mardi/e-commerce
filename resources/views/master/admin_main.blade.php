@@ -46,10 +46,8 @@
                 <a class="nav-link" href="/adminPanel/logout"><i class="fas fa-power-off fa-lg"></i></a>
               </li>
           @else
-              <li class="nav-item" style="margin-left:30% ">
-                <a class="nav-link" href={{route('admin.create')}}>Register</a>
-              </li>
-              <li class="nav-item">
+              
+              <li class="nav-item"style="margin-left:35% ">
                 <a class="nav-link" href="/adminPanel/login">LogIn</a>
               </li>
           @endif

@@ -47,11 +47,21 @@
      </nav>
  
     <div class="col-sm-8 mx-5 mt-4" style="position:absolute; right:0">
+
+    @if ( session('admin')->email == 'admin@admin.com')
+        <div class="alert alert-danger border border-dark">
+            <h6  style="text-align: center;">
+                You are connected from the default admin, Please add new admin and delete this one for more secuity. 
+                <a class="link-primary" href="{{route('admin.create')}}"><u>New account</u></a>
+            </h6>   
+        </div>
+    @endif
         
-        @if(View::hasSection('dashboard-content'))
+        
+    @if(View::hasSection('dashboard-content'))
         @yield('dashboard-content')
     @else
-        <h5 class="mt-5" style="text-align: center; font-size:x-large"><u>Welcome admin {{session('admin')->nom}}</u></h5>
+        <h5 class="mt-5" style="text-align: center; font-size:x-large"><u>Welcome {{session('admin')->nom}}</u></h5>
         <p style="text-align: center">you can log out <a href="{{route('addminLogout')}}" style="color: red"><u>Here</u></a>.</p>
     @endif
     </div>

@@ -50,7 +50,6 @@
 
             <button class="col-md-8 mb-4 btn btn-outline-primary" type="submit">Register</button>
     </form>
-    <p class="col-md-8" style="font-size: small; text-align:center"> You can <a href="/login" style="color: blue"><u>Log in</u></a> if you are already registred </p>
 </div>
    
 @endsection

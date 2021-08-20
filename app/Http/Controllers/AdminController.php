@@ -58,15 +58,15 @@ class AdminController extends Controller
         ]);
 
         $admin= Admin::create([
-            'nom' => $request['firstname'],
-            'prenom' =>$request['lastname'] ,
+            'prenom' => $request['firstname'],
+            'nom' =>$request['lastname'] ,
             'gsm' =>$request['phone'] ,
             'email' =>$request['email'] ,
             'password' =>  Hash::make($request['password']),
           ]);
 
         //   $credentials = $request->only('email', 'password');            
-            return redirect('/dashboard')->with('success','Your account has been created successfuly!   you can log in now');
+            return redirect('/dashboard')->with('success','Your account has been created successfuly! ');
 
     }
 
