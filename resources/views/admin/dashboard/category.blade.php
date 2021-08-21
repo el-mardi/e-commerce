@@ -4,7 +4,12 @@
     
 <h4 style="display: inline">Category management</h4>
  
-<a href="" class="btn btn-success border border-2 border-dark" style="position:absolute; right: 30px"> Add new category <i class="fas fa-plus-square"></i> </a>
+
+<div class="row mt-3">
+    <input class="form-control " type="search" placeholder="Search" aria-label="Search" style="position: relative; left:2cm; font-family:serif; width: 15cm; height:1cm;">
+    <a href="" class="col-sm-3 btn btn-success " style="position:absolute; right: 30px;"> Add new category <i class="fas fa-plus-square"></i> </a>
+</div>     
+
 <table class="table mt-4">
     <thead>
       <tr>
@@ -12,20 +17,25 @@
         <th scope="col">id</th>
         <th scope="col">Name</th>
         <th scope="col">description</th>
+        <th scope="col">show</th>
         <th scope="col">Edit</th>
         <th scope="col">Delete</th>
       </tr>
     </thead>
     <tbody>
-     
-      <tr>
+
+     @foreach ($categories as $category)
+     <tr>
         <td><input type="checkbox"></td>
-        <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>Thornton Thornton Thornton Thornton Thornton Thornton  Thornton Thornton  Thornton Thornton Thornton Thornton Thornton  Thornton Thornton Thornton </td>
-        <td><a href="#"><i class="fas fa-edit"></i></a></td>
-        <td><a href="#"><i class="fas fa-minus-square"></i></a></td>
-      </tr>
+        <th>{{$i++}}</th>
+        <td>{{$category->nom}}</td>
+        <td>{{$category->description}}</td>
+        <td><a class="link-primary" href="{{route('category.show', $category->id_ctg)}}"><i class="fas fa-eye"></i></a></td>
+        <td><a class="link-success" href="{{route('category.edit', $category->id_ctg)}}"><i class="fas fa-edit"></i></a></td>
+        <td><a class="link-danger" href="{{route('category.destroy', $category->id_ctg)}}"><i class="fas fa-minus-square"></i></a></td>
+        
+    </tr>
+    @endforeach
      
     </tbody>
   </table>

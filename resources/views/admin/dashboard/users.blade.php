@@ -5,32 +5,44 @@
 <h4 style="display: inline">Users management</h4>
     
     
-<a href="" class="btn btn-success" style="position:absolute; right: 30px"> Add new user <i class="fas fa-plus-square"></i> </a>
-<table class="table mt-4">
+
+<div class="row mt-3">
+    <input class="form-control " type="search" placeholder="Search" aria-label="Search" style="position: relative; left:2cm; font-family:serif; width: 15cm; height:1cm;">
+    <a href="" class="col-sm-3 btn btn-success " style="position:absolute; right: 30px;"> Add new user <i class="fas fa-plus-square"></i> </a>
+</div>     
+
+<table class="table table-light table-striped mt-5">
     <thead>
       <tr>
         <th scope="col">#</th>
         <th scope="col">id</th>
-        <th scope="col">Name</th>
-        <th scope="col">description</th>
+        <th scope="col">FirstName</th>
+        <th scope="col">LastName</th>
+        <th scope="col">Email</th>
+        <th scope="col">GSM</th>
+        <th scope="col">Show</th>
         <th scope="col">Edit</th>
         <th scope="col">Delete</th>
       </tr>
     </thead>
     <tbody>
-     
+
+      @foreach ($users as $user)
       <tr>
-        <td><input type="checkbox"></td>
-        <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>Thornton Thornton Thornton Thornton Thornton Thornton  Thornton Thornton  Thornton Thornton Thornton Thornton Thornton  Thornton Thornton Thornton </td>
-        <td><a href="#"><i class="fas fa-edit"></i></a></td>
-        <td><a href="#"><i class="fas fa-minus-square"></i></a></td>
+        <th><input type="checkbox"></th>
+        <th>{{$i++}}</th>
+        <td>{{$user->nom}}</td>
+        <td>{{$user->prenom}}</td>
+        <td>{{$user->email}}</td>
+        <td>{{$user->gsm}}</td>
+        <td><a class="link-primary" href="{{route('user.show', $user->id_user)}}"><i class="fas fa-eye"></i></a></td>
+        <td><a class="link-success" href="{{route('user.edit', $user->id_user)}}"><i class="fas fa-edit"></i></a></td>
+        <td><a class="link-danger" href="{{route('user.destroy', $user->id_user)}}"><i class="fas fa-minus-square"></i></a></td>
       </tr>
-     
+        @endforeach
+        
     </tbody>
   </table>
-
 
 
 @endsection

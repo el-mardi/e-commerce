@@ -43,15 +43,13 @@ Route::get('/adminPanel/logout',[AdminController::class ,'logout'])->name('addmi
 Route::middleware([CheckAuth::class])->group(function () {
 
     Route::get('/dashboard', [AdminController::class,'dashboard'])->name('dashboard');   
-    Route::get('/dashboard/category',[CategoryController::class,'home'])->name('categoryHome');
-    Route::get('/dashboard/product',[ProductController::class,'home'])->name('productHome');
-    Route::get('/dashboard/admins',[AdminController::class,'home'])->name('adminsHome');
-    Route::get('/dashboard/users',[UserController::class,'home'])->name('usersHome');
-    Route::get('/dashboard/order',[OrderController::class,'home'])->name('orderHome');
-    Route::get('/dashboard/markdown',[MarkDownController::class,'home'])->name('markdownHome');
-    Route::get('/dashboard/picture',[PictureController::class,'home'])->name('pictureHome');
     Route::resource('category',CategoryController::class);
     Route::resource('admin',AdminController::class);
+    Route::resource('category',CategoryController::class);
+    Route::resource('product',ProductController::class);
+    Route::resource('markdown',MarkDownController::class);
+    Route::resource('picture',PictureController::class);
+    Route::resource('order',OrderController::class);
 
    
 });

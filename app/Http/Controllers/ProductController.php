@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Models\Product;
+
 
 class ProductController extends Controller
 {
@@ -18,7 +21,17 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products = DB::table('produits')
+                        ->join('categories', 'categories.id_ctg', '=', 'produits.id_ctg')
+                        ->join('remises', 'produits.id_rem', '=', 'remises.id_rem')
+                        ->select('produits.*','categories.nom As categ_nom', 'remises.pourcentage')
+                        ->distinct()
+                        // ->count()
+                        ->get();
+                        // dd($products);
+      
+        
+        return view('admin.dashboard.product', ['products' => $products, 'i'=> 1]);
     }
 
     /**

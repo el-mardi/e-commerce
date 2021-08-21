@@ -4,7 +4,12 @@
     
 <h4 style="display:inline">Orders management</h4>
      
-<a href="" class="btn btn-success" style="position:absolute; right: 30px"> Add new order <i class="fas fa-plus-square"></i> </a>
+
+<div class="row mt-3">
+    <input class="form-control " type="search" placeholder="Search" aria-label="Search" style="position: relative; left:2cm; font-family:serif; width: 15cm; height:1cm;">
+    <a href="" class="col-sm-3 btn btn-success " style="position:absolute; right: 30px;"> Add new order <i class="fas fa-plus-square"></i> </a>
+</div>     
+
 <table class="table mt-4">
     <thead>
       <tr>

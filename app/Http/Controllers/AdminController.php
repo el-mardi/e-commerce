@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Admin;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+
 
 
 
@@ -26,7 +28,9 @@ class AdminController extends Controller
      */
     public function index()
     {
-        //
+        $admins = DB::table('admins')->get();
+        // dd($admins);
+        return view('admin.dashboard.admins', ['admins' => $admins, 'i'=> 1]);
     }
 
     /**
@@ -78,7 +82,9 @@ class AdminController extends Controller
      */
     public function show($id)
     {
-        //
+        $admin= Admin::where('id_adm', '=', $id)->firstOrFail();
+        return view('admin.dashboard.admin.show',['admin' => $admin]);
+
     }
 
     /**
@@ -89,7 +95,10 @@ class AdminController extends Controller
      */
     public function edit($id)
     {
-        //
+        $admin= Admin::where('id_adm', '=', $id)->firstOrFail();
+        // dd($admin);
+        return view('admin.dashboard.admin.edit',['admin'=> $admin]);
+
     }
 
     /**
