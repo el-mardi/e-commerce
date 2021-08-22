@@ -6,7 +6,7 @@
   
 <div class="row mt-3">
     <input class="form-control " type="search" placeholder="Search" aria-label="Search" style="position: relative; left:2cm; font-family:serif; width: 15cm; height:1cm;">
-    <a href="" class="col-sm-3 btn btn-success " style="position:absolute; right: 30px;"> Add new admin <i class="fas fa-plus-square"></i> </a>
+    <a href="{{ route('admin.create') }}" class="col-sm-3 btn btn-success " style="position:absolute; right: 30px;"> Add new admin <i class="fas fa-plus-square"></i> </a>
 </div>     
 
 <table class="table table-light table-striped shadow mt-5">
@@ -35,7 +35,13 @@
         <td>{{$admin->gsm}}</td>
         <td><a class="link-primary" href="{{route('admin.show', $admin->id_adm)}}"><i class="fas fa-eye"></i></a></td>
         <td><a class="link-success" href="{{route('admin.edit', $admin->id_adm)}}"><i class="fas fa-edit"></i></a></td>
-        <td><a class="link-danger" href="{{route('admin.destroy', $admin->id_adm)}}"><i class="fas fa-minus-square"></i></a></td>
+        <td>
+            <form action="{{route('admin.destroy', $admin->id_adm)}}" method="POST">
+                @csrf
+                @method('DELETE')
+                <button type="submit"> <i style="color:red" class="fas fa-minus-square"></i></button>
+            </form>
+        </td>
       </tr>
         @endforeach
         

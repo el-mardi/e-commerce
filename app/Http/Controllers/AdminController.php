@@ -110,7 +110,39 @@ class AdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validate = $request->validate([
+            'firstname' => 'required|string',
+            'lastname' => 'required|string',
+            'gsm' => 'required',
+            'email' => 'required|email',
+            'ancient' => 'required',
+            'new' => 'required|min:8 ',
+            'password-confirmation' =>'required | min:8'
+        ]);
+        $admin = Admin::where('id_adm', '=', $id)->firstOrfail();
+        if (Hash::check( $request['ancient'], $admin['password'])) {
+            if ($request['new']== $request['password-confirmation']) {
+            // dd($validate);
+                // Admin::whereId($id)->update($validate);
+
+                Admin::where('id_adm', '=', $id)
+                ->update(['nom' =>$validate['firstname'], 'prenom'=>$validate['lastname'] , 'gsm'=>$validate['gsm'],
+                 'email'=>$validate['email'], 'password'=>  Hash::make($validate['new'])]);
+                
+                 $admin = Admin::where('id_adm', '=', $id)->firstOrfail();
+                 return view('admin.dashboard.admin.show',['admin' => $admin])->with('success','Your account has been updated successfuly! ');
+
+            
+            }else{ 
+               return back()->withErrors([
+                    'new' => 'Your new password is invalid!',
+                    ]);
+            }
+            } else {
+                return back()->withErrors([
+                    'ancient' => 'Your old password is invalid!',
+                    ]);        }
+        
     }
 
     /**
@@ -121,7 +153,8 @@ class AdminController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $admin= Admin::where('id_adm', '=', $id)->delete();
+        return back();
     }
 
     

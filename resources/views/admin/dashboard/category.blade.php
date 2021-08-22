@@ -10,7 +10,7 @@
     <a href="" class="col-sm-3 btn btn-success " style="position:absolute; right: 30px;"> Add new category <i class="fas fa-plus-square"></i> </a>
 </div>     
 
-<table class="table mt-4">
+<table class="table table-light table-striped shadow mt-5">
     <thead>
       <tr>
         <th scope="col">#</th>

@@ -40,7 +40,7 @@
           @if (session('admin'))
           
               <li class="nav-item" style="margin-left:35% ">
-                <a class="nav-link" href=""><i class="fas fa-user-circle  fa-lg"></i></a>
+                <a class="nav-link" href="{{route('admin.edit', session('admin')->id_adm)}}"><i class="fas fa-user-circle  fa-lg"></i></a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="/adminPanel/logout"><i class="fas fa-power-off fa-lg"></i></a>
