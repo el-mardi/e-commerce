@@ -26,10 +26,14 @@ use App\Http\Middleware\CheckAuth;
 // users route
 
 Route::get('/',[HomeController::class, 'home']);
-Route::resource('user',UserController::class);
+Route::get('/about-us',[HomeController::class, 'about'])->name('about');
+Route::get('/categories',[HomeController::class, 'categories'])->name('categories');
+Route::get('/shop',[HomeController::class, 'shop'])->name('shop');
+
 Route::get('/login',[UserController::class ,'logIn']);
 Route::get('/logout',[UserController::class ,'logout']);
 
+Route::resource('user',UserController::class)->except('index');
 
 // admin route
 
@@ -41,8 +45,9 @@ Route::get('/adminPanel/logout',[AdminController::class ,'logout'])->name('addmi
 
 
 Route::middleware([CheckAuth::class])->group(function () {
-
+    
     Route::get('/dashboard', [AdminController::class,'dashboard'])->name('dashboard');   
+    Route::resource('user',UserController::class)->only('index');
     Route::resource('category',CategoryController::class);
     Route::resource('admin',AdminController::class);
     Route::resource('category',CategoryController::class);

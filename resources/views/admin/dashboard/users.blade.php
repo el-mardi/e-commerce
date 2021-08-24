@@ -37,7 +37,13 @@
         <td>{{$user->gsm}}</td>
         <td><a class="link-primary" href="{{route('user.show', $user->id_user)}}"><i class="fas fa-eye"></i></a></td>
         <td><a class="link-success" href="{{route('user.edit', $user->id_user)}}"><i class="fas fa-edit"></i></a></td>
-        <td><a class="link-danger" href="{{route('user.destroy', $user->id_user)}}"><i class="fas fa-minus-square"></i></a></td>
+        <td>
+            <form action="{{route('user.destroy', $user->id_user)}}" method="POST">
+                @csrf
+                @method('DELETE')
+                <button type="submit"> <i style="color:red" class="fas fa-minus-square"></i></button>
+            </form>
+        </td>
       </tr>
         @endforeach
         

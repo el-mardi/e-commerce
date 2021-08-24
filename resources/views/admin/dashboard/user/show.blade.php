@@ -9,22 +9,22 @@
    
    <div class="col mt-4" style="position: relative; ">
       <div class="mt-3 ">
-          <h6>First name: <u>{{ $admin->nom}} </u> </h6> 
+          <h6>First name: <u>{{ $user->nom}} </u> </h6>
        </div>
        <div class="mt-3">
-          <h6>Last name:  <u>{{ $admin->prenom}} </u></h6> 
+          <h6>Last name:  <u>{{ $user->prenom}} </u></h6> 
        </div>
        <div class="mt-3">
-           Email: <u>{{ $admin->email}} </u> 
+           Email: <u>{{ $user->email}} </u> 
        </div>
        <div class="mt-3">
-           Gsm: <u> {{ $admin->gsm}}</u> 
+           Gsm: <u> {{ $user->gsm}}</u> 
        </div>
        <div class="mt-3">
-           Created at: <u>{{ $admin->created_at}} </u> 
+           Created at: <u>{{ $user->created_at}} </u> 
        </div>
        <div class="mt-3">
-           Last update: <u>{{ $admin->updated_at}} </u> 
+           Last update: <u>{{ $user->updated_at}} </u> 
        </div>
        <div class="mt-3 mb-5">
        </div>

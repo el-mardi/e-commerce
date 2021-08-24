@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Order;
+use App\Models\OrderLine;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 
@@ -13,9 +15,7 @@ use Illuminate\Support\Facades\DB;
 class UserController extends Controller
 {
 
-    public function home(){
-        return view('admin.dashboard.users');
-    }
+   
 
     /**
      * Display a listing of the resource.
@@ -80,7 +80,9 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = User::where('id_user', '=', $id)->firstOrFail();
+
+        return view('admin.dashboard.user.show',['user'=>$user]);
     }
 
     /**
@@ -91,7 +93,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = USer::where('id_user', '=', $id)->firstOrFail();
+        return view('admin.dashboard.user.edit',['user'=> $user]);
     }
 
     /**
@@ -114,7 +117,20 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+
+        $orders = Order::where('id_user', '=', $id)->get();
+        
+        foreach ($orders as $key => $order) {
+            $orderLines  = OrderLine::where('id_cmd', '=', $order['id_cmd'])->get();
+             foreach ($orderLines as $value) {
+                OrderLine::where('id_lg_cmd', '=', $value['id_lg_cmd'])->delete();
+             }
+            
+             Order::where('id_cmd', '=', $order['id_cmd'])->delete();
+        }
+
+        $user = User::where('id_user', '=', $id)->delete();
+        return back()->with('success', 'User was Deleted successfuly');
     }
 
     public function logIn()

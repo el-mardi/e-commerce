@@ -18,9 +18,7 @@ class AdminController extends Controller
         return view('admin.dashboard');
     }
 
-    public function home(){
-        return view('admin.dashboard.admins');
-    }
+   
     /**
      * Display a listing of the resource.
      *
@@ -56,7 +54,7 @@ class AdminController extends Controller
         $validate = $request->validate([
             'firstname' => 'required',
             'lastname' => 'required',
-            'email' => 'required | email| unique:users',
+            'email' => 'required | email| unique:admins| unique:users',
             'phone' => 'required | max:10',
             'password' => 'required | min:6 | confirmed ',
         ]);

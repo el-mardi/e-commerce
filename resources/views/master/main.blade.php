@@ -72,16 +72,16 @@
     
           <ul class="navbar-nav" style="margin-left:35%">
             <li class="nav-item active">
-              <a class="nav-link" href="#"> <b>Home</b> </i> </a>
+              <a class="nav-link" href="/"> <b>Home</b> </i> </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">categories</a>
+              <a class="nav-link" href="{{route('categories')}}">categories</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Shop</a>
+              <a class="nav-link" href="{{route('shop')}}">Shop</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">About us</a>
+              <a class="nav-link" href="{{route('about')}}">About us</a>
             </li>
             
       </nav>

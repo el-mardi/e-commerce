@@ -39,6 +39,9 @@
             <form action="{{route('admin.destroy', $admin->id_adm)}}" method="POST">
                 @csrf
                 @method('DELETE')
+              <input type="hidden"  name="id" value="{{$admin->id_adm}}" />
+              <input type="hidden"  name="table" value="admins" />
+
                 <button type="submit"> <i style="color:red" class="fas fa-minus-square"></i></button>
             </form>
         </td>
