@@ -63,13 +63,12 @@ class UserController extends Controller
             'password' =>  Hash::make($request['password']),
           ]);
 
+        //   auth()->attempt( $request->only('email', 'password'));
+
         //   $credentials = $request->only('email', 'password');
-          $request->session()->put('user', $user);
-            
-            return redirect('/')->with('new-user','Your account has been created successfuly!   you can log in now');
+                    
+            return redirect('/login')->with('new-user','Your account has been created successfuly!   you can log in now');
         
-
-
         }
 
     /**
@@ -81,7 +80,6 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::where('id_user', '=', $id)->firstOrFail();
-
         return view('admin.dashboard.user.show',['user'=>$user]);
     }
 
@@ -135,8 +133,36 @@ class UserController extends Controller
 
     public function logIn()
     { 
-        return view('user.login');
+            return view('user.login');
     }
+
+    public function login_Val(Request $request){
+
+        $validate = $request->validate([
+                'email' => 'required|email',
+                'password'=> 'required'
+            ]);
+
+            $user =User::where('email', '=', $request['email'])->first();
+
+            if($user){
+            if (Hash::check($request['password'], $user['password'] )) {
+                     $request->session()->put('user', $user);
+                    return redirect('/')->with('success', 'Your are logged in successfuly ');
+
+                } else {
+                    return back()->withErrors([
+                        'password'=> 'The password field is invalid.'
+                    ]);
+            }
+        }else{
+            return back()->withErrors([
+                'email'=> 'The password field is invalid.'
+            ]);
+        }
+            
+
+            }
 
     public function logout(Request $request){
         // return view('user.logout');

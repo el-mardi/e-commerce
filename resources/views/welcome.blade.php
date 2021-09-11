@@ -2,6 +2,12 @@
 
 @section('body-content')
 
+  @if (session('success'))
+  <div class="alert alert-success border border-dark mb-3">
+      {{ session('success') }}
+  </div>
+  @endif
+
   <div id="carouselExampleIndicators" class="carousel slide mb-5" data-bs-ride="carousel" >
   <div class="carousel-indicators">
     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -60,8 +66,8 @@
           <p style="color: rgb(247, 247, 247); font-size: large;"> Markdown upto 50%</p>
         </div>  
         <div class="d-grid gap-2 mt-2">
-          <a class="btn btn-warning" href="#">Add to pannier</a>
           <a href="/" class="btn btn-info">Shop now</a>
+          <a class="btn btn-warning" href="#">Add to pannier</a>
         </div>
       </div>
     </div>

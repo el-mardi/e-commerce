@@ -7,10 +7,12 @@
     
 
 <div class="row mt-3">
-    <input class="form-control " type="search" placeholder="Search" aria-label="Search" style="position: relative; left:2cm; font-family:serif; width: 15cm; height:1cm;">
-    <a href="" class="col-sm-3 btn btn-success " style="position:absolute; right: 30px;"> Add new user <i class="fas fa-plus-square"></i> </a>
+
+    <input class="form-control" id="search_user" type="search" placeholder="Search" aria-label="Search" style="position: relative; left:2cm; font-family:serif; width: 15cm; height:1cm;">
+    <a target="_blank" href="{{route('user.create')}}" class="col-sm-3 btn btn-success " style="position:absolute; right: 30px;"> Add new user <i class="fas fa-plus-square"></i> </a>
 </div>     
 
+<div id="output_search_user_null"></div>
 <table class="table table-light table-striped mt-5">
     <thead>
       <tr>
@@ -25,9 +27,10 @@
         <th scope="col">Delete</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody  id="output_search_user">
 
       @foreach ($users as $user)
+      
       <tr>
         <th><input type="checkbox"></th>
         <th>{{$i++}}</th>

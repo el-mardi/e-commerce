@@ -31,7 +31,6 @@
 
             <button class="col-md-8 mt-4 btn btn-outline-primary" type="submit"> Log in</button>
         </form>
-        <p class="col-md-8 mt-4" style="font-size: small; text-align:center">If you do not have an account  you can <a href="{{route('user.create')}}" style="color: blue"><u>Register here </u></a> </p>
     </div>
 
 @endsection

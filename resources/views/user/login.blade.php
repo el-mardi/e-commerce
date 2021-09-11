@@ -10,11 +10,20 @@
         </div>
         @endif
         <h3><b><u>Log in</u></b></h3>
-        <form action="" method="">
+        <form action="{{route('loginVal')}}" method="POST">
             @csrf
-            <div class="col-md-8 mt-3">
-                <input class="form-control mb-4" type="text" title="" placeholder="Email">
-                <input class="form-control mb-4" type="password" title="" placeholder="Password">
+            <div class="col-md-8 mt-4">
+                <input name="email" class="form-control @error('email') is-invalid" @enderror type="text"  value="{{old('email')}}"  placeholder="Email">
+                @if ($errors->has('email'))
+                <span class="text-danger mb-2">{{ $errors->first('email') }}</span>
+                @endif
+            </div>
+        
+            <div class="col-md-8 mt-4 mb-3">
+                <input type="password" name="password" class="form-control @error('password') is-invalid" @enderror   placeholder="Password">
+                @if ($errors->has('password'))
+                <span class="text-danger mb-2">{{ $errors->first('password') }}</span>
+                @endif
             </div>
 
             <button class="col-md-8 mt-3 btn btn-outline-primary" type="submit"> Log in</button>

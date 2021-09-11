@@ -9,9 +9,15 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PictureController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\MarkDownController;
+use App\Http\Controllers\UserAccountController;
+
+
+use App\Http\Controllers\Ajax\AjaxSearchRequestController;
 
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\CheckAuth;
+use App\Http\Middleware\CheckUserAuth;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -23,17 +29,29 @@ use App\Http\Middleware\CheckAuth;
 |
 */
 
+
+
 // users route
 
 Route::get('/',[HomeController::class, 'home']);
 Route::get('/about-us',[HomeController::class, 'about'])->name('about');
 Route::get('/categories',[HomeController::class, 'categories'])->name('categories');
 Route::get('/shop',[HomeController::class, 'shop'])->name('shop');
+Route::get('/login',[UserController::class ,'logIn'])->name('login');
+Route::resource('user',UserController::class)->only('create','store');
 
-Route::get('/login',[UserController::class ,'logIn']);
-Route::get('/logout',[UserController::class ,'logout']);
+Route::post('/login-val',[UserController::class ,'login_Val'])->name('loginVal');
+Route::get('/logout',[UserController::class ,'logout'])->name('logout');
 
-Route::resource('user',UserController::class)->except('index');
+Route::middleware([CheckUserAuth::class])->group(function(){
+
+    Route::prefix('account')->group(function () {
+        Route::get('/{user}/edit', [UserAccountController::class, 'edit'])->name('editAccount');
+        Route::get('/notifications', [UserAccountController::class, 'notifications'])->name('notifications');
+    });
+
+});
+
 
 // admin route
 
@@ -47,7 +65,7 @@ Route::get('/adminPanel/logout',[AdminController::class ,'logout'])->name('addmi
 Route::middleware([CheckAuth::class])->group(function () {
     
     Route::get('/dashboard', [AdminController::class,'dashboard'])->name('dashboard');   
-    Route::resource('user',UserController::class)->only('index');
+    Route::resource('user',UserController::class)->except('create','store');
     Route::resource('category',CategoryController::class);
     Route::resource('admin',AdminController::class);
     Route::resource('category',CategoryController::class);
@@ -58,3 +76,9 @@ Route::middleware([CheckAuth::class])->group(function () {
 
    
 });
+
+
+            // AJAX Routes
+
+    Route::post('/search-user',[AjaxSearchRequestController::class, 'searchUser'])->name('searchUser');
+    Route::post('/search-admin',[AjaxSearchRequestController::class, 'searchAdmin'])->name('searchAdmin');

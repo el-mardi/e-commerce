@@ -5,9 +5,11 @@
 <h4 >Admins management</h4>
   
 <div class="row mt-3">
-    <input class="form-control " type="search" placeholder="Search" aria-label="Search" style="position: relative; left:2cm; font-family:serif; width: 15cm; height:1cm;">
-    <a href="{{ route('admin.create') }}" class="col-sm-3 btn btn-success " style="position:absolute; right: 30px;"> Add new admin <i class="fas fa-plus-square"></i> </a>
+    <input class="form-control" id="search_admin" type="search" placeholder="Search" aria-label="Search" style="position: relative; left:2cm; font-family:serif; width: 15cm; height:1cm;">
+    <a target="_blank" href="{{ route('admin.create')}}" class="col-sm-3 btn btn-success " style="position:absolute; right: 30px;"> Add new admin <i class="fas fa-plus-square"></i> </a>
 </div>     
+
+<div id="output_search_null"></div>
 
 <table class="table table-light table-striped shadow mt-5">
     <thead>
@@ -23,7 +25,7 @@
         <th scope="col">Delete</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody id="output_search_admin">
 
       @foreach ($admins as $admin)
       <tr>
@@ -50,7 +52,6 @@
         
     </tbody>
   </table>
-
   
   
   @endsection

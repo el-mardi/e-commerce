@@ -10,7 +10,7 @@
 
 <div class="row">
         
-    <nav class="col-sm-3 rounded-3 border border-secondary border-2 mt-4" style=" position: absolute; left:2px; background-color:rgb(196, 196, 196)">
+    <nav id="nav_admin" class="col-sm-3 rounded-3 border border-secondary border-2 mt-4" style=" position: absolute; left:2px; background-color:rgb(196, 196, 196)">
         <h5 class="mt-3" style="text-align: center;"><u>Welcome {{session('admin')->nom}}</u></h5>
  
          <ul class="navbar-nav mb-4" style="font-size: large;">

@@ -53,3 +53,4 @@
 </div>
    
 @endsection
+{{-- <p class="col-md-8 mt-4" style="font-size: small; text-align:center">If you do not have an account  you can <a href="{{route('admin.create')}}" style="color: blue"><u>Register here </u></a> </p> --}}
