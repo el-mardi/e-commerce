@@ -13,7 +13,7 @@
 </div>     
 
 <div id="output_search_user_null"></div>
-<table class="table table-light table-striped mt-5">
+<table class="table border border-dark table-striped mt-5 show_list_in_table">
     <thead>
       <tr>
         <th scope="col">#</th>
@@ -27,7 +27,8 @@
         <th scope="col">Delete</th>
       </tr>
     </thead>
-    <tbody  id="output_search_user">
+    <tbody id="output_search_user" style="display: none"></tbody>
+    <tbody  id="output_search_user_1">
 
       @foreach ($users as $user)
       
@@ -44,7 +45,7 @@
             <form action="{{route('user.destroy', $user->id_user)}}" method="POST">
                 @csrf
                 @method('DELETE')
-                <button type="submit"> <i style="color:red" class="fas fa-minus-square"></i></button>
+                <button type="submit" class="btn bt-link"> <i style="color:red" class="fas fa-minus-square"></i></button>
             </form>
         </td>
       </tr>

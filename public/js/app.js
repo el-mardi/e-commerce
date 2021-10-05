@@ -2062,6 +2062,8 @@ module.exports = {
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
+$(document).ready(function () {});
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
@@ -2115,21 +2117,69 @@ $(document).ready(function () {
         admin: txt
       },
       success: function success(data) {
-        if (data == 'vide') {
-          console.log($("#output_search_null").css('dispaly', 'block').attr('class', 'alert alert-info mx-5 mt-3').html("Enter somthing to search"));
-          console.log($("#output_search_admin").css('display', 'none'));
+        if (txt == "") {
+          // window.location = '/admin';
+          $("#output_search_admin_1").css('display', 'table-row-group');
+          $("#output_search_admin").css('display', 'none');
         } else {
           if (data) {
-            console.log($("#output_search_null").css('display', 'none'));
-            console.log($("#output_search_admin").css('display', 'table-row-group').html(data));
+            $("#output_search_admin_1").css('display', 'none');
+            $("#output_search_admin").css('display', 'table-row-group').html(data);
+            $("#output_search_null").css('display', 'none');
           } else {
-            console.log($("#output_search_null").css('display', 'block').attr('class', 'alert alert-danger border border-danger mx-5 mt-3').html('No results for your search Try again'));
-            console.log($("#output_search_admin").css('display', 'none'));
+            $("#output_search_admin_1").css('display', 'table-row-group');
+            $("#output_search_admin").css('display', 'none');
+            $("#output_search_null").css('display', 'block').attr('class', 'alert alert-danger border border-danger mx-5 mt-3').html('No results for your search Try again');
           }
         }
       },
       error: function error() {
-        console.log($("#output_search_null").css('display', 'block').attr('class', 'alert alert-danger border border-danger mx-5 mt-3').html('Error Request, Try later'));
+        $("#output_search_null").css('display', 'block').attr('class', 'alert alert-danger border border-danger mx-5 mt-3').html('Error Request, Try later');
+      }
+    });
+  });
+});
+
+/***/ }),
+
+/***/ "./resources/js/search_category.js":
+/*!*****************************************!*\
+  !*** ./resources/js/search_category.js ***!
+  \*****************************************/
+/***/ (() => {
+
+$(document).ready(function () {
+  $("#search_category").keyup(function () {
+    var txt = $(this).val();
+    console.log(txt);
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      type: 'POST',
+      url: 'search-category',
+      data: {
+        category: txt
+      },
+      success: function success(data) {
+        if (data == "vide") {
+          // window.location = '/category';
+          $("#output_category").css('display', 'none');
+          $("#output_category_1").css('display', 'table-row-group');
+        } else {
+          if (data) {
+            $("#output_category").css('display', 'table-row-group').html(data);
+            $("#output_category_1").css('display', 'none');
+            $("#output_search_null").css('display', 'none');
+          } else {
+            $("#output_category_1").css('display', 'table-row-group');
+            $("#output_category").css('display', 'none');
+            $("#output_search_null").css('display', 'block').attr('class', ' mt-3 mx-5 border alert alert-warning').html("There is no results. Try again");
+          }
+        }
+      },
+      error: function error(data) {
+        $("#output_search_null").attr('class', ' mt-3 mx-5 border border-danger alert alert-danger').html("Oooopps the request not sent good, Try later");
       }
     });
   });
@@ -2157,23 +2207,23 @@ $(document).ready(function () {
       },
       success: function success(data) {
         if (data == "vide") {
-          console.log($("#output_search_user_null").css('display', 'block'));
-          console.log($("#output_search_user_null").attr('class', ' mt-3 mx-5 border alert alert-info').html("Enter something in search "));
-          console.log($("#output_search_user").css('display', 'none'));
+          // window.location = '/user';
+          $("#output_search_user").css('display', 'none');
+          $("#output_search_user_1").css('display', 'table-row-group');
         } else {
           if (data) {
-            console.log($("#output_search_user").css('display', 'table-row-group'));
-            console.log($("#output_search_user").html(data));
-            console.log($("#output_search_user_null").css('display', 'none'));
+            $("#output_search_user").css('display', 'table-row-group');
+            $("#output_search_user_1").css('display', 'table-row-group').html(data);
+            $("#output_search_user_null").css('display', 'none');
           } else {
-            console.log($("#output_search_user_null").css('display', 'block'));
-            console.log($("#output_search_user_null").attr('class', ' mt-3 mx-5 border alert alert-warning').html("There is no results. Try again"));
-            console.log($("#output_search_user").css('display', 'none'));
+            $("#output_search_user_1").css('display', 'table-row-group');
+            $("#output_search_user").css('display', 'none');
+            $("#output_search_user_null").css('display', 'block').attr('class', ' mt-3 mx-5 border alert alert-warning').html("There is no results. Try again");
           }
         }
       },
       error: function error(data) {
-        console.log($("#output_search_user_null").attr('class', ' mt-3 mx-5 border border-danger alert alert-danger').html("Oooopps the request not sent good, Try later"));
+        $("#output_search_user_null").attr('class', ' mt-3 mx-5 border border-danger alert alert-danger').html("Oooopps the request not sent good, Try later");
       }
     });
   });
@@ -30512,7 +30562,7 @@ process.umask = function() { return 0; };
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"_from":"axios@^0.21","_id":"axios@0.21.4","_inBundle":false,"_integrity":"sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==","_location":"/axios","_phantomChildren":{},"_requested":{"type":"range","registry":true,"raw":"axios@^0.21","name":"axios","escapedName":"axios","rawSpec":"^0.21","saveSpec":null,"fetchSpec":"^0.21"},"_requiredBy":["#DEV:/"],"_resolved":"https://registry.npmjs.org/axios/-/axios-0.21.4.tgz","_shasum":"c67b90dc0568e5c1cf2b0b858c43ba28e2eda575","_spec":"axios@^0.21","_where":"C:\\\\laragon\\\\www\\\\laravel\\\\ecommerce_website","author":{"name":"Matt Zabriskie"},"browser":{"./lib/adapters/http.js":"./lib/adapters/xhr.js"},"bugs":{"url":"https://github.com/axios/axios/issues"},"bundleDependencies":false,"bundlesize":[{"path":"./dist/axios.min.js","threshold":"5kB"}],"dependencies":{"follow-redirects":"^1.14.0"},"deprecated":false,"description":"Promise based HTTP client for the browser and node.js","devDependencies":{"coveralls":"^3.0.0","es6-promise":"^4.2.4","grunt":"^1.3.0","grunt-banner":"^0.6.0","grunt-cli":"^1.2.0","grunt-contrib-clean":"^1.1.0","grunt-contrib-watch":"^1.0.0","grunt-eslint":"^23.0.0","grunt-karma":"^4.0.0","grunt-mocha-test":"^0.13.3","grunt-ts":"^6.0.0-beta.19","grunt-webpack":"^4.0.2","istanbul-instrumenter-loader":"^1.0.0","jasmine-core":"^2.4.1","karma":"^6.3.2","karma-chrome-launcher":"^3.1.0","karma-firefox-launcher":"^2.1.0","karma-jasmine":"^1.1.1","karma-jasmine-ajax":"^0.1.13","karma-safari-launcher":"^1.0.0","karma-sauce-launcher":"^4.3.6","karma-sinon":"^1.0.5","karma-sourcemap-loader":"^0.3.8","karma-webpack":"^4.0.2","load-grunt-tasks":"^3.5.2","minimist":"^1.2.0","mocha":"^8.2.1","sinon":"^4.5.0","terser-webpack-plugin":"^4.2.3","typescript":"^4.0.5","url-search-params":"^0.10.0","webpack":"^4.44.2","webpack-dev-server":"^3.11.0"},"homepage":"https://axios-http.com","jsdelivr":"dist/axios.min.js","keywords":["xhr","http","ajax","promise","node"],"license":"MIT","main":"index.js","name":"axios","repository":{"type":"git","url":"git+https://github.com/axios/axios.git"},"scripts":{"build":"NODE_ENV=production grunt build","coveralls":"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js","examples":"node ./examples/server.js","fix":"eslint --fix lib/**/*.js","postversion":"git push && git push --tags","preversion":"npm test","start":"node ./sandbox/server.js","test":"grunt test","version":"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json"},"typings":"./index.d.ts","unpkg":"dist/axios.min.js","version":"0.21.4"}');
+module.exports = JSON.parse('{"_args":[["axios@0.21.4","C:\\\\laragon\\\\www\\\\e-commerce"]],"_development":true,"_from":"axios@0.21.4","_id":"axios@0.21.4","_inBundle":false,"_integrity":"sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==","_location":"/axios","_phantomChildren":{},"_requested":{"type":"version","registry":true,"raw":"axios@0.21.4","name":"axios","escapedName":"axios","rawSpec":"0.21.4","saveSpec":null,"fetchSpec":"0.21.4"},"_requiredBy":["#DEV:/"],"_resolved":"https://registry.npmjs.org/axios/-/axios-0.21.4.tgz","_spec":"0.21.4","_where":"C:\\\\laragon\\\\www\\\\e-commerce","author":{"name":"Matt Zabriskie"},"browser":{"./lib/adapters/http.js":"./lib/adapters/xhr.js"},"bugs":{"url":"https://github.com/axios/axios/issues"},"bundlesize":[{"path":"./dist/axios.min.js","threshold":"5kB"}],"dependencies":{"follow-redirects":"^1.14.0"},"description":"Promise based HTTP client for the browser and node.js","devDependencies":{"coveralls":"^3.0.0","es6-promise":"^4.2.4","grunt":"^1.3.0","grunt-banner":"^0.6.0","grunt-cli":"^1.2.0","grunt-contrib-clean":"^1.1.0","grunt-contrib-watch":"^1.0.0","grunt-eslint":"^23.0.0","grunt-karma":"^4.0.0","grunt-mocha-test":"^0.13.3","grunt-ts":"^6.0.0-beta.19","grunt-webpack":"^4.0.2","istanbul-instrumenter-loader":"^1.0.0","jasmine-core":"^2.4.1","karma":"^6.3.2","karma-chrome-launcher":"^3.1.0","karma-firefox-launcher":"^2.1.0","karma-jasmine":"^1.1.1","karma-jasmine-ajax":"^0.1.13","karma-safari-launcher":"^1.0.0","karma-sauce-launcher":"^4.3.6","karma-sinon":"^1.0.5","karma-sourcemap-loader":"^0.3.8","karma-webpack":"^4.0.2","load-grunt-tasks":"^3.5.2","minimist":"^1.2.0","mocha":"^8.2.1","sinon":"^4.5.0","terser-webpack-plugin":"^4.2.3","typescript":"^4.0.5","url-search-params":"^0.10.0","webpack":"^4.44.2","webpack-dev-server":"^3.11.0"},"homepage":"https://axios-http.com","jsdelivr":"dist/axios.min.js","keywords":["xhr","http","ajax","promise","node"],"license":"MIT","main":"index.js","name":"axios","repository":{"type":"git","url":"git+https://github.com/axios/axios.git"},"scripts":{"build":"NODE_ENV=production grunt build","coveralls":"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js","examples":"node ./examples/server.js","fix":"eslint --fix lib/**/*.js","postversion":"git push && git push --tags","preversion":"npm test","start":"node ./sandbox/server.js","test":"grunt test","version":"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json"},"typings":"./index.d.ts","unpkg":"dist/axios.min.js","version":"0.21.4"}');
 
 /***/ })
 
@@ -30679,6 +30729,7 @@ module.exports = JSON.parse('{"_from":"axios@^0.21","_id":"axios@0.21.4","_inBun
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
 /******/ 	__webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./node_modules/jquery/dist/jquery.min.js")))
 /******/ 	__webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/js/app.js")))
+/******/ 	__webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/js/search_category.js")))
 /******/ 	__webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/js/search_user.js")))
 /******/ 	__webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/js/search_admin.js")))
 /******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/css/app.css")))

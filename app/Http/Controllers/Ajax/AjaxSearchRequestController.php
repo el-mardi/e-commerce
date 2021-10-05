@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Admin;
+use App\Models\Category;
 
 
 class AjaxSearchRequestController extends Controller
@@ -15,24 +16,27 @@ class AjaxSearchRequestController extends Controller
                         ->where('prenom', $request['user'])
                         ->orWhere('nom', 'like', '%' .$request['user']. '%')
                         ->orWhere('prenom', 'like', '%' .$request['user']. '%')
-                        ->get();  
+                        ->get();
     $i=1;
     if ( $request['user'] == null) {
-        echo $output="vide";
+       echo "vide";
     } else {
         
         foreach ($users as $user) {
+            $id =$user['id_user'];
     $output =
-    "<tr class='table-info'>
+    "<tr>
             <th><input type='checkbox'></th>
             <th> ".$i."</th>
             <th> ".$user['nom']."</th>
-            <td> ".$user['prenom']."</td>
-            <td> ".$user['email']."</td>
-            <td> ".$user['gsm']."</td>
-            <td><a id='show_user' class='link-primary' href=''><i class='fas fa-eye'></i></a></td>
-            <td><a id='edit_user' class='link-success' href=''><i class='fas fa-edit'></i></a></td>
-            <td><button id='delete_user' type='submit'> <i style='color:red' class='fas fa-minus-square'></i></button></td>
+            <th> ".$user['prenom']."</th>
+            <th> ".$user['email']."</th>
+            <th> ".$user['gsm']."</th>
+            <td><a id='show_user' class='link-primary' href='/user/$id'><i class='fas fa-eye'></i></a></td>
+            <td><a id='edit_user' class='link-success' href='/user/$id/edit'><i class='fas fa-edit'></i></a></td>
+            <td>
+                <button type='submit' class='btn bt-link'> <i style='color:red' class='fas fa-minus-square'></i></button>
+            </td>
             </tr>";
             $i++;
     echo $output;
@@ -56,17 +60,18 @@ class AjaxSearchRequestController extends Controller
     } else {
         
         foreach ($admins as $admin) {
+            $id=$admin['id_adm'];
             $output=
             "
                 <tr>
                     <th><input type='checkbox'></th>
                     <th>".$i++."</th>
-                    <td>".$admin['nom']."</td>
-                    <td>".$admin['prenom']."</td>
-                    <td>".$admin['email']."</td>
-                    <td>".$admin['gsm']."td>
-                    <td><a class='link-primary' href=''><i class='fas fa-eye'></i></a></td>
-                    <td><a class='link-success' href=''><i class='fas fa-edit'></i></a></td>
+                    <th>".$admin['nom']."</th>
+                    <th>".$admin['prenom']."</th>
+                    <th>".$admin['email']."</th>
+                    <th>".$admin['gsm']."th>
+                    <td><a class='link-primary' href='/admin/$id'><i class='fas fa-eye'></i></a></td>
+                    <td><a class='link-success' href='/admin/$id/edit'><i class='fas fa-edit'></i></a></td>
                     <td> <button type='submit'> <i style='color:red' class='fas fa-minus-square'></i></button> </td>
                 </tr>
             ";
@@ -77,6 +82,36 @@ class AjaxSearchRequestController extends Controller
         
     }
 
+    public function searchCategory(Request $request){
+        $categories = Category::where('id_ctg', '=', $request['category'])
+                    ->orWhere('nom', 'like', '%'.$request['category'].'%')
+                    ->get();
+    $i = 1;
+    if ($request['category'] == null) {
+        echo "vide";
+    }else{
+        foreach ($categories as $category) {
+            $id= $category['id_ctg'];
+            $output = "
+                <tr>
+                    <th><input type='checkbox'></th>
+                    <th>".$i++."</th>
+                    <th>".$category['nom']."</th>
+                    <th>".$category['description']."</th>
+                    <td><a class='link-primary' href='/category/$id'><i class='fas fa-eye'></i></a></td>
+                    <td><a class='link-success' href='/category/$id/edit'><i class='fas fa-edit'></i></a></td>
+                    <td> 
+                        <button type='submit'> <i style='color:red' class='fas fa-minus-square'></i></button>
+                    </td>
+               
+                </tr>
+            ";
+            echo $output;
+        }
+    }
+       
+
+    }
 
 
 }//end claass

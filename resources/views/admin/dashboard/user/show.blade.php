@@ -2,7 +2,7 @@
 
 @section('dashboard-content')
 
-<div class="row border mx-5 mt-5 bg-light shadow">
+<div class="row border border-5 mx-5 mt-5 shadow">
     <div class="col mt-5" style="position:relative; left:10%; top:30%">
         <img  class="rounded-circle border border-2"  src="/img/admin.jpg" style="height: 5cm; width:5cm; ">
    </div>

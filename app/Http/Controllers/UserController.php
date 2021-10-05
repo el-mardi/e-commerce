@@ -39,6 +39,7 @@ class UserController extends Controller
         return view('user.register');
     }
 
+    
     /**
      * Store a newly created resource in storage.
      *

@@ -12,29 +12,27 @@ $(document).ready(function() {
             data: {user : txt},
             success: function(data){
                 if(data=="vide"){
-                    console.log($("#output_search_user_null").css('display', 'block'));
-                    console.log($("#output_search_user_null").attr('class', ' mt-3 mx-5 border alert alert-info')
-                    .html("Enter something in search "));     
-                    console.log($("#output_search_user").css('display', 'none'));
+                    // window.location = '/user';
+                    $("#output_search_user").css('display', 'none');
+                    $("#output_search_user_1").css('display', 'table-row-group');
 
                 }else{
 
                 if(data){
-                    console.log($("#output_search_user").css('display', 'table-row-group'));
-                    console.log($("#output_search_user").html(data));
-                    console.log($("#output_search_user_null").css('display', 'none'));
+                    $("#output_search_user").css('display','table-row-group');
+                    $("#output_search_user_1").css('display', 'table-row-group').html(data);
+                    $("#output_search_user_null").css('display', 'none');
                 }else{
-                    console.log($("#output_search_user_null").css('display', 'block'));
-                    console.log($("#output_search_user_null").attr('class', ' mt-3 mx-5 border alert alert-warning')
-                    .html("There is no results. Try again"));
-                    console.log($("#output_search_user").css('display', 'none'));
+                    $("#output_search_user_1").css('display', 'table-row-group');
+                    $("#output_search_user").css('display', 'none');
+                    $("#output_search_user_null").css('display', 'block').attr('class', ' mt-3 mx-5 border alert alert-warning').html("There is no results. Try again");
 
                 }
                 }
             },
             error:function(data){
-                console.log($("#output_search_user_null").attr('class', ' mt-3 mx-5 border border-danger alert alert-danger')
-                .html("Oooopps the request not sent good, Try later"));
+                $("#output_search_user_null").attr('class', ' mt-3 mx-5 border border-danger alert alert-danger')
+                .html("Oooopps the request not sent good, Try later");
                 
             }
         });

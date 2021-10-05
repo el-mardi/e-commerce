@@ -8,10 +8,10 @@
 
 <div class="row mt-3">
     <input class="form-control " type="search" placeholder="Search" aria-label="Search" style="position: relative; left:2cm; font-family:serif; width: 15cm; height:1cm;">
-    <a href="" class="col-sm-3 btn btn-success " style="position:absolute; right: 30px;"> Add new product <i class="fas fa-plus-square"></i> </a>
+    <a href="{{route('product.create')}}" class="col-sm-3 btn btn-success " style="position:absolute; right: 30px;"> Add new product <i class="fas fa-plus-square"></i> </a>
 </div>     
 
-<table class="table table-light table-striped mt-5">
+<table class="table table-striped border border-dark show_list_in_table  mt-5">
     <thead>
       <tr>
         <th scope="col">#</th>

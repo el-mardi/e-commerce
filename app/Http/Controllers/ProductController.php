@@ -5,15 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Product;
+use App\Models\Category;
+use App\Models\MarkDown;
 
 
 class ProductController extends Controller
 {
-
-    public function home(){
-        return view('admin.dashboard.product');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -41,7 +38,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $markdowns = MarkDown::all();
+        $categories = Category::all();
+        return view('admin.dashboard.product.create',['markdowns'=>$markdowns, 'categories'=>$categories]);
     }
 
     /**
@@ -63,7 +62,15 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
+        $product = DB::table('produits')
+        ->join('images', 'produits.id_prd', '=', 'images.id_prd')
+                    ->join('categories', 'categories.id_ctg', '=', 'produits.id_ctg')
+                    ->join('remises', 'remises.id_rem', '=', 'produits.id_rem')
+                    ->select('produits.*','images.*','remises.*','categories.nom as cat_nom','categories.description as cat_description')
+                    ->where('produits.id_prd', '=', $id)
+                    ->get();
+                    // dd($product[0]);exit();
+        return view('admin.dashboard.product.show', ['product'=>$product[0]]);
     }
 
     /**
@@ -74,7 +81,15 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        $categories = Category::all();
+        $markdowns = MarkDown::all();
+        $product= Product::where('id_prd', '=', $id)
+                            ->join('categories', 'categories.id_ctg','=','produits.id_ctg')
+                            ->join('remises', 'remises.id_rem','=','produits.id_rem')
+                            ->select(['remises.*', 'produits.*','categories.nom as ctg_nom', 'categories.description as ctg_description'])
+                            ->firstOrfail();
+        // dd($product, $categories, $markdowns); exit();
+        return view('admin.dashboard.product.edit', ['product'=>$product, 'categories'=>$categories, 'markdowns'=>$markdowns]);
     }
 
     /**

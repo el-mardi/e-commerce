@@ -11,7 +11,7 @@
 
 <div id="output_search_null"></div>
 
-<table class="table table-light table-striped shadow mt-5">
+<table class="table  border border-dark table-striped shadow mt-5 show_list_in_table">
     <thead>
       <tr>
         <th scope="col">#</th>
@@ -25,7 +25,8 @@
         <th scope="col">Delete</th>
       </tr>
     </thead>
-    <tbody id="output_search_admin">
+    <tbody id="output_search_admin" style="display: none"></tbody>
+    <tbody id="output_search_admin_1">
 
       @foreach ($admins as $admin)
       <tr>
@@ -44,7 +45,7 @@
               <input type="hidden"  name="id" value="{{$admin->id_adm}}" />
               <input type="hidden"  name="table" value="admins" />
 
-                <button type="submit"> <i style="color:red" class="fas fa-minus-square"></i></button>
+                <button type="submit" class="btn btn-link"> <i style="color:red" class="fas fa-minus-square"></i></button>
             </form>
         </td>
       </tr>

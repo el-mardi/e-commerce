@@ -2,18 +2,12 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
-
+use App\Models\Category;
 
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-
-    public function home(){
-        return view('admin.dashboard.category');
-    }
-
-
     /**
      * Display a listing of the resource.
      *
@@ -32,7 +26,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.dashboard.category.create');
     }
 
     /**
@@ -43,7 +37,17 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request);
+        $validation = $request->validate([
+            'nom'=>'required | unique:categories',
+            'ctg_description' =>'required | min:20'
+        ]);
+        
+        Category::create([
+            'nom'=>$request['nom'],
+            'description'=>$request['ctg_description'],
+        ]);
+        return back()->with('success', 'Category Addes Deleted Successfuly');
     }
 
     /**
@@ -54,7 +58,10 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        //
+        $category = Category::where('id_ctg', '=', $id)
+                                ->firstOrFail();
+                                // dd($category);
+        return view('admin.dashboard.category.show', ['category' => $category]);
     }
 
     /**
@@ -65,7 +72,8 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $category = Category::where('id_ctg', '=', $id)->firstOrfail();
+        return view('admin.dashboard.category.edit',['category'=>$category]);
     }
 
     /**
@@ -77,7 +85,14 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validation= $request->validate([
+            'nom'=>'required | unique:categories',
+            'description'=>'required | min:15'
+        ]);
+
+        Category::where('id_ctg', '=', $id)
+                ->update(['nom' =>$validation['nom'], 'description' =>$validation['description']]);
+                return redirect()->route('category.show',$id)->with('success', 'Category was updated ');
     }
 
     /**
@@ -88,6 +103,8 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $category= Category::where('id_ctg', '=', $id)->delete();
+        return back()->with('success','The category was deleted successfuly');
+
     }
 }
