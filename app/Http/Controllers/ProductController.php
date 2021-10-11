@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\MarkDown;
+use App\Models\Picture;
 
 
 class ProductController extends Controller
@@ -51,7 +52,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**
@@ -63,7 +64,7 @@ class ProductController extends Controller
     public function show($id)
     {
         $product = DB::table('produits')
-        ->join('images', 'produits.id_prd', '=', 'images.id_prd')
+                    ->join('images', 'produits.id_prd', '=', 'images.id_prd')
                     ->join('categories', 'categories.id_ctg', '=', 'produits.id_ctg')
                     ->join('remises', 'remises.id_rem', '=', 'produits.id_rem')
                     ->select('produits.*','images.*','remises.*','categories.nom as cat_nom','categories.description as cat_description')
@@ -112,6 +113,10 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Picture::where('id_prd', '=', $id)->delete();
+        Product::where('id_prd', '=', $id)->delete();
+        return back()->with('success','The product was deleted successfuly');
+
+         
     }
 }

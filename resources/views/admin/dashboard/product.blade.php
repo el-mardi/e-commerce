@@ -3,13 +3,20 @@
 @section('dashboard-content')
     
 <h4 style="display: inline">Products management</h4>
-    
-   
 
 <div class="row mt-3">
-    <input class="form-control " type="search" placeholder="Search" aria-label="Search" style="position: relative; left:2cm; font-family:serif; width: 15cm; height:1cm;">
-    <a href="{{route('product.create')}}" class="col-sm-3 btn btn-success " style="position:absolute; right: 30px;"> Add new product <i class="fas fa-plus-square"></i> </a>
+    <select class=" col-sm-2 ml-1" name="select" id="search_select" >
+        <option value="default" selected>Default</option>
+        <option value="category">Search By Category</option>
+        <option value="markDown">Search By Mark Down</option>
+        <option value="quantite">Search By Quantite</option>
+    </select>
+    {{-- style="position: relative; left:2cm; font-family:serif; width: 15cm; height:1cm;" --}}
+    <input class="col form-control mx-2" id="search_product" type="search" placeholder="Search" aria-label="Search" >
+    <a href="{{route('product.create')}}" class="col-sm-3 btn btn-success mr-2" > Add new product <i class="fas fa-plus-square"></i> </a>
 </div>     
+
+<div id="search_output_null_product"></div>
 
 <table class="table table-striped border border-dark show_list_in_table  mt-5">
     <thead>
@@ -27,7 +34,8 @@
         <th scope="col">Delete</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody id="output_product" style="display: none"> </tbody>
+    <tbody id="output_product_1">
 
       @foreach ($products as $product)
       <tr>
@@ -41,7 +49,13 @@
         <td>{{$product->description}}</td>
         <td><a class="link-primary" href="{{route('product.show', $product->id_prd)}}"><i class="fas fa-eye"></i></a></td>
         <td><a class="link-success" href="{{route('product.edit', $product->id_prd)}}"><i class="fas fa-edit"></i></a></td>
-        <td><a class="link-danger" href="{{route('product.destroy', $product->id_prd)}}"><i class="fas fa-minus-square"></i></a></td>
+        <td>
+            <form action="{{route('product.destroy', $product->id_prd)}}" method="POST">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-link" style="color: red"><i class="fas fa-minus-square"></i></button>
+            </form>
+        </td>
       </tr>
         @endforeach
         

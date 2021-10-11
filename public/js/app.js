@@ -2098,6 +2098,156 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
+/***/ "./resources/js/create_new_order.js":
+/*!******************************************!*\
+  !*** ./resources/js/create_new_order.js ***!
+  \******************************************/
+/***/ (() => {
+
+$(document).ready(function () {
+  $("#category_for_new_order").change(function () {
+    var category = $("#category_for_new_order option:selected").val();
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      type: 'POST',
+      url: '/addOrder',
+      data: {
+        categorySelected: category
+      },
+      success: function success(data) {
+        $("#product_for_new_order").html(data);
+      },
+      error: function error(data) {
+        console.log("error");
+      }
+    });
+  });
+  $("#product_for_new_order").change(function () {
+    var product = $("#product_for_new_order option:selected").val();
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      type: 'POST',
+      url: '/addOrder',
+      data: {
+        productSelected: product
+      },
+      success: function success(data) {
+        $("#table_show_detail").css('display', 'table');
+        $("#table_show_detail_tbody").html(data);
+        $("#quantite_for_new_order").css('display', 'block');
+        $("#add_to_facture").css('display', 'block');
+      },
+      error: function error(data) {
+        console.log("error");
+      }
+    });
+  });
+  $("#add_to_facture").click(function () {
+    var category = $("#category_for_new_order option:selected").val();
+    var product = $("#product_for_new_order option:selected").val();
+    var quantite = $("#quantite_for_new_order").val();
+    console.log(category, product, quantite);
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      type: 'POST',
+      url: '/addOrder',
+      data: {
+        theCategory: category,
+        theProduct: product,
+        thQuantite: quantite
+      },
+      success: function success(data) {
+        if (data === "quantite insufficient") {
+          $("#errors").css('display', 'block').attr('class', 'alert alert-danger border').html("quantite insufficient, Please reduce your quantity");
+        } else {
+          $("#facture_body").append(data);
+          $("#quantite_for_new_order").val(1);
+          $("#errors").css('display', 'none');
+        }
+      },
+      error: function error(data) {}
+    });
+  });
+  $("#Create_order").click(function () {
+    var category = $("#category_for_new_order option:selected").val();
+    var product = $("#product_for_new_order option:selected").val();
+    var quantite = $("#quantite_for_new_order").val();
+
+    if (category === "" || product === "" || quantite === "") {
+      $("#errors").css('display', 'block').attr('class', 'alert alert-danger border').html("Please fill the formule");
+    } else {
+      $.ajax({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        type: 'POST',
+        url: '/addOrder',
+        data: {},
+        success: function success(data) {
+          $("#full_page").css('display', 'none');
+          $("#user_div").css('display', 'block');
+        },
+        error: function error(data) {}
+      });
+    }
+  });
+  $("#search_for_prd").keyup(function () {
+    var search_for_prd = $("#search_for_prd").val();
+    $("#notification_for_input").css('display', 'block').html("The results in the select inbox ");
+    $("#return_to_category").css('display', 'block');
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      type: 'POST',
+      url: '/addOrder',
+      data: {
+        search_prd: search_for_prd
+      },
+      success: function success(data) {
+        $("#category_for_new_order").css('display', 'none');
+        $("#product_for_new_order").html(data);
+      },
+      error: function error(data) {}
+    });
+  });
+  $("#return_to_category").click(function () {
+    $("#category_for_new_order").css('display', 'block');
+    $("#notification_for_input").css('display', 'none');
+    $("#return_to_category").css('display', 'none');
+    $("#search_for_prd").val('');
+    $("#product_for_new_order").html("<option value=''selected>Select product</option>");
+  });
+  $("#select_user").change(function () {
+    user = $("#select_user option:selected").val();
+    $("#submit_order").click(function () {
+      console.log(user);
+      $.ajax({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        type: 'POST',
+        url: '/order',
+        data: {
+          id_user: user
+        },
+        success: function success(data) {
+          $("#id_for_check").html(data);
+        },
+        error: function error() {}
+      });
+    });
+  });
+}); //ready
+
+/***/ }),
+
 /***/ "./resources/js/search_admin.js":
 /*!**************************************!*\
   !*** ./resources/js/search_admin.js ***!
@@ -2150,8 +2300,8 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   $("#search_category").keyup(function () {
-    var txt = $(this).val();
-    console.log(txt);
+    var txt = $(this).val(); // console.log(txt);
+
     $.ajax({
       headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -2180,6 +2330,125 @@ $(document).ready(function () {
       },
       error: function error(data) {
         $("#output_search_null").attr('class', ' mt-3 mx-5 border border-danger alert alert-danger').html("Oooopps the request not sent good, Try later");
+      }
+    });
+  });
+});
+
+/***/ }),
+
+/***/ "./resources/js/search_order.js":
+/*!**************************************!*\
+  !*** ./resources/js/search_order.js ***!
+  \**************************************/
+/***/ (() => {
+
+$(document).ready(function () {
+  var select_date;
+  $("#order_search_select").click(function () {
+    var value = $(this).val();
+
+    if (value === "date") {
+      $("#select_date").show();
+      $("#notification").fadeIn("slow").delay(4000).fadeOut("slow");
+    } else {
+      $("#select_date").hide();
+    }
+  });
+  $("#select_date").keypress(function (e) {
+    var txt = "txt";
+    var Theselect = $("#order_search_select").val();
+
+    if (e.which == 13) {
+      select_date = $("#select_date").datepicker().val();
+      console.log(select_date);
+      callAjax(txt, Theselect, select_date);
+    }
+  });
+  $("#search_order").keyup(function () {
+    var txt = $("#search_order").val();
+    var Theselect = $("#order_search_select").val();
+    callAjax(txt, Theselect, Date());
+  });
+
+  function callAjax(txt, Theselect, select_date) {
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      type: 'POST',
+      url: '/search-order',
+      data: {
+        order: txt,
+        select: Theselect,
+        date_input: select_date
+      },
+      success: function success(data) {
+        if (data == "NoResult" || data == "vide") {
+          if (data == "vide") {
+            console.log("vide");
+            $("#output_search_order").css('display', 'none');
+            $("#output_search_order_1").css('display', 'table-row-group');
+            $("#output_search_order_null").css('display', 'none');
+          } else {
+            $("#output_search_order").css('display', 'none');
+            $("#output_search_order_1").css('display', 'table-row-group');
+            $("#output_search_order_null").css('display', 'block').attr('class', 'alert alert-warning border mt-3 mx-5').html("There is no result #f8ffbdin");
+          }
+        } else {
+          $("#output_search_order").css('display', 'table-row-group').html(data);
+          $("#output_search_order_1").css('display', 'none');
+          $("#output_search_order_null").css('display', 'none');
+        }
+      },
+      error: function error(data) {
+        $("#output_search_order_null").css('display', 'block').attr('class', 'alert alert-danger border mt-3').html("Ooopps, the request not sent good, try again later");
+      }
+    });
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/search_product.js":
+/*!****************************************!*\
+  !*** ./resources/js/search_product.js ***!
+  \****************************************/
+/***/ (() => {
+
+$(document).ready(function () {
+  $("#search_product").keyup(function () {
+    var txt = $("#search_product").val();
+    var get_select = $("#search_select").val();
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      type: 'POST',
+      url: 'search-product',
+      data: {
+        product: txt,
+        select: get_select
+      },
+      success: function success(data) {
+        if (data == "vide") {
+          $("#output_product").css('display', 'none');
+          $("#output_product_1").css('display', 'table-row-group');
+          $("#search_output_null_product").css('display', 'none');
+        } else {
+          if (data) {
+            $("#output_product_1").css('display', 'none');
+            $("#search_output_null_product").css('display', 'none');
+            $("#output_product").css('display', 'table-row-group').html(data);
+          } else {
+            $("#output_product_1").css('display', 'table-row-group');
+            $("#output_product").css('display', 'none');
+            $("#search_output_null_product").css('display', 'block').attr('class', 'mt-3 alert alert-warning border').html('There is no result, Try again');
+          }
+        }
+      },
+      error: function error() {
+        $("#search_output_null_product").css('display', 'block').attr('class', 'mt-3 alert alert-warning border').html('An error happend, Try again');
       }
     });
   });
@@ -30729,9 +30998,12 @@ module.exports = JSON.parse('{"_args":[["axios@0.21.4","C:\\\\laragon\\\\www\\\\
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
 /******/ 	__webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./node_modules/jquery/dist/jquery.min.js")))
 /******/ 	__webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/js/app.js")))
+/******/ 	__webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/js/search_product.js")))
 /******/ 	__webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/js/search_category.js")))
+/******/ 	__webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/js/search_order.js")))
 /******/ 	__webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/js/search_user.js")))
 /******/ 	__webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/js/search_admin.js")))
+/******/ 	__webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/js/create_new_order.js")))
 /******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/css/app.css")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	

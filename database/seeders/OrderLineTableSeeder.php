@@ -15,7 +15,7 @@ class OrderLineTableSeeder extends Seeder
      */
     public function run()
     {
-        OrderLine::factory()->count(10)->create();
+        OrderLine::factory()->count(30)->create();
         
     }
 }

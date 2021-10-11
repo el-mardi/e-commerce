@@ -2,7 +2,7 @@ $(document).ready(function(){
 
     $("#search_category").keyup(function(){
         var txt = $(this).val();
-        console.log(txt);
+        // console.log(txt);
 
         $.ajax({
 

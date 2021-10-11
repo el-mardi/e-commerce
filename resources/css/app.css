@@ -14,23 +14,29 @@ body {
 
 /* Admin Css */
 #admin_main_body{
-    background-image: linear-gradient(to left,#f8f6f3, #ffeeda);
+    background-image: linear-gradient(to right,#fff9f0, #ffe2c1);
 }
 
 .side_bar a:hover{
     transform : scale(0.98);
     color: rgb(0, 0, 0);
-    background-color: rgb(255, 248, 207);
+    background-color: rgb(222, 255, 251);
     border-radius: 15px;
-    border: black;
+    font-weight: bold;
 }
 
 .show_list_in_table{
-    background-image: linear-gradient(to left,#fbffdc, #ffedca); 
+    background-image: linear-gradient(to left,#fffecf, #ffedcb, #ffeebc); 
 }
 
-.show_list_in_table tbody :hover{
-    transform: scale(1.005);
+.table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+    background-color: hsla(43, 100%, 91%, 0.877); 
+ }
+
+.show_list_in_table tbody tr:hover{
+    /* transform: scale(0.9999); */
+    color:rgb(238, 111, 52);
+    text-decoration: underline;
 }
  
 /* User Css  */

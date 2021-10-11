@@ -14,9 +14,12 @@ const mix = require('laravel-mix');
 mix.js([
         'node_modules/jquery/dist/jquery.min.js',
         'resources/js/app.js',
+        'resources/js/search_product.js',
         'resources/js/search_category.js',
+        'resources/js/search_order.js',
         'resources/js/search_user.js',
         'resources/js/search_admin.js',
+        'resources/js/create_new_order.js',
     ],  'public/js/app.js')
     .postCss('resources/css/app.css', 'public/css', [
         

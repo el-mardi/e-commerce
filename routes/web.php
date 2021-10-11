@@ -13,6 +13,7 @@ use App\Http\Controllers\UserAccountController;
 
 
 use App\Http\Controllers\Ajax\AjaxSearchRequestController;
+use App\Http\Controllers\Ajax\AjaxRequestController;
 
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\CheckAuth;
@@ -80,6 +81,11 @@ Route::middleware([CheckAuth::class])->group(function () {
 
             // AJAX Routes
 
+    Route::post('/addOrder',[AjaxRequestController::class, 'createOrder'])->name('createOrder');
+    
     Route::post('/search-user',[AjaxSearchRequestController::class, 'searchUser'])->name('searchUser');
     Route::post('/search-admin',[AjaxSearchRequestController::class, 'searchAdmin'])->name('searchAdmin');
     Route::post('/search-category',[AjaxSearchRequestController::class, 'searchCategory'])->name('searchCategory');
+    Route::post('/search-product',[AjaxSearchRequestController::class, 'searchProduct'])->name('searchProduct');
+    Route::post('/search-order',[AjaxSearchRequestController::class, 'searchOrder'])->name('searchOrder');
+    

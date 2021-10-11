@@ -39,7 +39,7 @@
                         </select>
                     </div>
 
-                    <input type="text" class="col form-control" name="" id="" style="height: 1cm">
+                    <input type="text" class="col form-control" placeholder="%" name="" id="" style="height: 1cm">
 
                     <div class="col row  ml-1">
                         Start at :
