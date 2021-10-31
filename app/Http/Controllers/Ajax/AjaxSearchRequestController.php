@@ -351,8 +351,7 @@ class AjaxSearchRequestController extends Controller
                 <th><a class='link-success' href=><i class='fas fa-edit'></i></a></th>
                 <th>
                 <form action='' method='POST'>
-                    
-                        <button type='submit' class='btn btn-link'> <i class='fas fa-minus-square' style='color: red'></i></button>
+                    <button type='submit' class='btn btn-link'> <i class='fas fa-minus-square' style='color: red'></i></button>
                 </form>
                 </th>
                 
