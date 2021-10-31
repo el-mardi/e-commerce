@@ -53,7 +53,7 @@
             <h6  style="text-align: center;">
                 You are connected from the default admin, Please add new admin and delete this one for more secuity. 
                 <a class="link-primary" href="{{route('admin.create')}}"><u>New account</u></a>
-            </h6>   
+            </h6>
         </div>
     @endif
         
