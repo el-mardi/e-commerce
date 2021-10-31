@@ -20,6 +20,7 @@ mix.js([
         'resources/js/search_user.js',
         'resources/js/search_admin.js',
         'resources/js/create_new_order.js',
+        'resources/js/search_markdown.js', 
     ],  'public/js/app.js')
     .postCss('resources/css/app.css', 'public/css', [
         

@@ -26,6 +26,7 @@ class OrderController extends Controller
                                 ->where('lignes_commandes.id_cmd', '=', $user_cmd->id_cmd)
                                 ->join('commandes', 'lignes_commandes.id_cmd', '=', 'commandes.id_cmd')
                                 ->join('users', 'users.id_user', '=', 'commandes.id_user')
+                                // ->orderByRaw('users.nom')
                                 ->get();
             }
 
@@ -67,14 +68,47 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $session=session()->get('facture');
-            dd( session()->get('facture'), $request['id_user'] );
+        dd(session()->get('facture'));
+
+        // unset($_SESSION['facture']);
+        
+        foreach ($session as  $key => $value) {
+        // session()->destroy($key);
+// unset($session[$key]);
+        // session()->forget($value['id_prd']);
+        // session()->forget($value['nom']);
+        // session()->forget($value['price']);
+        // session()->forget($value['status']);
+        // session()->forget($value['quantite']);
+        // session()->forget($value['total']);
             
-                $request->session()->pull('facture.0');
-                // session()->forget('facture');
+            
+            // $value['id_prd']= null; 
+            // $value['nom']= null; 
+            // $value['price']= null; 
+            // $value['status']= null; 
+            // $value['quantite']= null; 
+            // $value['total']= null; 
+            //  $key = null;
+            //  echo $value['id_prd'];
+        // dd($key, $value);
+
+        }
+        // // session()->put('facture', $session);
+        // dd(session()->get('facture'));
+       
+        // dd(session()->get('facture'));
+        // session_destroy()
+        // dd($request['id_user'], $session);
+        // $request->session()->pull('facture'.$key);
+        // session()->forget($key);
+        
+        
+
+                // $request->session()->pull('facture.0');
+                // session()->destroy();
                
-            // session()->unset('facture',[]);
             // session()->forget('facture');exit();
-            // session()->destroy();
     }
 
     /**
@@ -90,10 +124,26 @@ class OrderController extends Controller
                     ->join('users', 'users.id_user','=','commandes.id_user')
                     ->join('produits', 'produits.id_prd', '=', 'lignes_commandes.id_prd')
                     ->join('categories', 'categories.id_ctg', '=', 'produits.id_ctg')
+                    ->join('remises', 'remises.id_rem', '=', 'produits.id_rem')
                     ->where('commandes.id_cmd', '=',$id)
-                    ->select(['categories.*','lignes_commandes.quantite as qauntite_prd' ,'categories.nom as ctg_name','commandes.*', 'lignes_commandes.*', 'produits.*', 'produits.nom as prd_name', 'users.*', 'users.nom as username'])
+                    ->select(['remises.*', 'categories.*','lignes_commandes.quantite as qauntite_prd' ,'categories.nom as ctg_name','commandes.*', 'lignes_commandes.*', 'produits.*', 'produits.nom as prd_name', 'users.*', 'users.nom as username'])
                     ->get();
+
+
+        $orders->facture =0;                    
+        foreach ($orders as $value) {
+            if ($value->statut === 1) {
+                $value->markDown = $value->pourcentage;
+                $value->total = ( $value->prix  - (($value->markDown * $value->prix )/ 100) ) *  $value->qauntite_prd ;
+            } else {
+                $value->markDown = "-";
+                $value->total = $value->prix * $value->qauntite_prd;
+            }
+            
+            $orders->facture = $orders->facture + $value->total; 
+        }
         // dd($orders);
+
         return view('admin.dashboard.order.show',['orders'=>$orders]);
     }
 
@@ -128,6 +178,11 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
-        //
+        DB::table('lignes_commandes')
+        ->where('lignes_commandes.id_cmd', '=', $id)
+        ->delete();
+        Order::where('id_cmd', '=', $id)->delete();
+        return back()->with('success','The Order was deleted successfuly');
+
     }
 }

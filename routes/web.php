@@ -88,4 +88,5 @@ Route::middleware([CheckAuth::class])->group(function () {
     Route::post('/search-category',[AjaxSearchRequestController::class, 'searchCategory'])->name('searchCategory');
     Route::post('/search-product',[AjaxSearchRequestController::class, 'searchProduct'])->name('searchProduct');
     Route::post('/search-order',[AjaxSearchRequestController::class, 'searchOrder'])->name('searchOrder');
+    Route::post('/search-markdown',[AjaxSearchRequestController::class, 'searchMarkDown'])->name('searchMarkDown');
     

@@ -11,6 +11,7 @@ use App\Models\Admin;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Order;
+use App\Models\MarkDown;
 
 
 class AjaxSearchRequestController extends Controller
@@ -299,6 +300,67 @@ class AjaxSearchRequestController extends Controller
         }
         }   
 
+    }
+
+    public function searchMarkDown(Request $request){
+
+        $value = $request['value'];
+        if ($request['check'] === "percentage") {
+       
+            $markdowns = MarkDown::where('pourcentage', '=', $value)
+                                    ->get();
+        } 
+        else if($request['check'] === "status"){
+             $markdowns = MarkDown::where('statut', '=', $value)
+                                    ->get();
+
+        }
+        else if ($request['check'] === "start_at") {
+             $markdowns = MarkDown::where('date_debut', '=', $value)
+                                    ->get();
+
+        } 
+        else if($request['check'] === "end_at"){
+             $markdowns = MarkDown::where('date_fin', '=', $value)
+                                    ->get();
+
+        }
+        $i=1;
+// dd($markdowns);exit();
+        if ( !isset($markdowns[0]) ) {
+            echo "vide";
+        } 
+
+        else{
+        foreach ($markdowns as $value) {
+            if ( $value['statut'] === 1 ) {
+                $status = "Active";
+            } else {
+                $status = "Not active";
+            }
+            
+            echo "
+                <tr>
+                <th><input type='checkbox'/></th>
+                <th>". $i++ ."</th>
+                <th>". $value['pourcentage'] ." %</th>
+                <th>".$status ."</th>
+                <th>". $value['date_debut'] ."</th>
+                <th>". $value['date_fin'] ."</th>
+                <th><a class='link-primary' href=><i class='fas fa-eye'></i></a></th>
+                <th><a class='link-success' href=><i class='fas fa-edit'></i></a></th>
+                <th>
+                <form action='' method='POST'>
+                    
+                        <button type='submit' class='btn btn-link'> <i class='fas fa-minus-square' style='color: red'></i></button>
+                </form>
+                </th>
+                
+                </tr>
+            ";
+        }
+        }
+      
     }
 
 }//end claass

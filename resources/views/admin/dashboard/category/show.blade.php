@@ -5,7 +5,7 @@
 
 <div class="row border border-5 mx-5 mt-5 shadow">
     <div class="col mt-5" style="position:relative; left:10%;">
-        <img  class="rounded-circle border border-2"  src="/img/admin.jpg" style="height: 5cm; width:5cm; ">
+        <img  class="rounded-circle border border-2"  src="/img/category.png" style="height: 5cm; width:5cm; ">
    </div>
    
    <div class="col mt-4 pb-5" style="position: relative; ">

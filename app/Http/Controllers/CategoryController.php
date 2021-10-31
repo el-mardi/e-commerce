@@ -47,7 +47,7 @@ class CategoryController extends Controller
             'nom'=>$request['nom'],
             'description'=>$request['ctg_description'],
         ]);
-        return back()->with('success', 'Category Addes Deleted Successfuly');
+        return back()->with('success', 'Category Added Successfuly');
     }
 
     /**
