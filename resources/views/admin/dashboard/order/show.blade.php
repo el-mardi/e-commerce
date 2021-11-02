@@ -32,6 +32,8 @@
                     <th>categpry name</th>
                     <th>price</th>
                     <th>quantite</th>
+                    <th>markDown %</th>
+                    <th>total</th>
                 </tr>
             </head>
             <tbody class="table table-secondary">
@@ -41,8 +43,14 @@
                     <th>{{$order->ctg_name}}</th>
                     <th>{{$order->prix}}</th>
                     <th>{{$order->qauntite_prd}}</th>
+                    <th>{{$order->markDown}}</th>
+                    <th>{{$order->total}}</th>
                 </tr>
                 @endforeach
+                <tr>
+                    <th colspan="5">Total</th>
+                    <th>{{$orders->facture}}</th>
+                </tr>
             </tbody>
         </table>
 

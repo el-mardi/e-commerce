@@ -2179,7 +2179,7 @@ $(document).ready(function () {
     var product = $("#product_for_new_order option:selected").val();
     var quantite = $("#quantite_for_new_order").val();
 
-    if (category === "" || product === "" || quantite === "") {
+    if (product === "" || quantite === "") {
       $("#errors").css('display', 'block').attr('class', 'alert alert-danger border').html("Please fill the formule");
     } else {
       $.ajax({
@@ -2333,6 +2333,97 @@ $(document).ready(function () {
       }
     });
   });
+});
+
+/***/ }),
+
+/***/ "./resources/js/search_markdown.js":
+/*!*****************************************!*\
+  !*** ./resources/js/search_markdown.js ***!
+  \*****************************************/
+/***/ (() => {
+
+$(document).ready(function () {
+  $("#search_by").change(function () {
+    var search_by = $("#search_by").val();
+
+    if (search_by === "percentage") {
+      $("#search_markdown").css('display', 'block');
+      $("#search_date").css('display', 'none');
+      $("#select_status").css('display', 'none');
+      $("#search_markdown").keyup(function () {
+        var text = $("#search_markdown").val();
+        callAjax(text, "percentage");
+      });
+    } else if (search_by === "status") {
+      $("#select_status").css('display', 'block');
+      $("#search_markdown").css('display', 'none');
+      $("#search_date").css('display', 'none');
+      $("#select_status").change(function () {
+        var status = $("#select_status").val();
+        callAjax(status, "status");
+      });
+    } else if (search_by === "start_at") {
+      $("#search_date").css('display', 'block');
+      $("#search_markdown").css('display', 'none');
+      $("#select_status").css('display', 'none');
+      $("#markNotification").fadeIn("slow").delay(6000).fadeOut();
+      $("#search_date").keypress(function (e) {
+        if (e.which == 13) {
+          var start_at = $("#search_date").val();
+          console.log(start_at);
+          callAjax(start_at, "start_at");
+        }
+      });
+    } else if (search_by === "end_at") {
+      $("#search_date").css('display', 'block');
+      $("#search_markdown").css('display', 'none');
+      $("#select_status").css('display', 'none');
+      $("#markNotification").fadeIn("slow").delay(6000).fadeOut();
+      $("#search_date").keypress(function (e) {
+        if (e.which == 13) {
+          var end_at = $("#search_date").val();
+          callAjax(end_at, "end_at");
+        }
+      });
+    } else if (search_by === "") {
+      $("#search_date").css('display', 'none');
+      $("#search_markdown").css('display', 'none');
+      $("#select_status").css('display', 'none');
+    }
+  });
+
+  function callAjax(value, check) {
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      url: '/search-markdown',
+      type: 'POST',
+      data: {
+        value: value,
+        check: check
+      },
+      success: function success(data) {
+        if (value == "") {
+          $("#output_search_markdown1").css('display', 'table-row-group');
+          $("#output_search_markdown_null").css('display', 'none');
+          $("#output_search_markdown").css('display', 'none');
+        } else if (data === "vide") {
+          $("#output_search_markdown_null").css('display', 'block').attr('class', 'alert alert-warning mt-3 mx-4 border').html("No results, Try again");
+          $("#output_search_markdown1").css('display', 'table-row-group');
+          $("#output_search_markdown").css('display', 'none');
+        } else {
+          $("#output_search_markdown_null").css('display', 'none');
+          $("#output_search_markdown").css('display', 'table-row-group').html(data);
+          $("#output_search_markdown1").css('display', 'none');
+        }
+      },
+      error: function error(data) {
+        console.log("Errors");
+      }
+    });
+  }
 });
 
 /***/ }),
@@ -31004,6 +31095,7 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 	__webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/js/search_user.js")))
 /******/ 	__webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/js/search_admin.js")))
 /******/ 	__webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/js/create_new_order.js")))
+/******/ 	__webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/js/search_markdown.js")))
 /******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/css/app.css")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	

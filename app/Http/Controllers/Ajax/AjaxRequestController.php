@@ -81,7 +81,7 @@ class AjaxRequestController extends Controller
         if ($product[0]->quantite >= $qt) {
 
             $ligne=['id_prd'=> $prd,'nom'=>$product[0]->nom, 'price'=>$product[0]->prix, 'status'=>$st, 'quantite'=>$qt, 'total'=>$total]; 
-            session()->push('facture', $ligne);
+            session()->put('facture', $ligne);
             echo "
                 <tr>
                     <td>". $ligne['nom'] ."</td>
@@ -109,6 +109,7 @@ class AjaxRequestController extends Controller
         ->select(['remises.*','produits.*'])
         ->get();
         // dd($products);
+        echo "<option value='' selected >Select product</option>";
         foreach ($products as $item) {
             echo "<option value='$item->id_prd'>$item->nom</option>";
         }

@@ -3,13 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Models\MarkDown;
+use App\Models\Product;
 
 class MarkDownController extends Controller
 {
-
-    public function home(){
-        return view('admin.dashboard.markdown');
-    }
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +16,9 @@ class MarkDownController extends Controller
      */
     public function index()
     {
-        //
+        $markDown = MarkDown::all();
+        
+        return view('admin.dashboard.markdown', ['markDowns' => $markDown, 'i'=>1]);
     }
 
     /**
@@ -27,7 +28,7 @@ class MarkDownController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.dashboard.markdown.create');
     }
 
     /**
@@ -49,7 +50,14 @@ class MarkDownController extends Controller
      */
     public function show($id)
     {
-        //
+        $markdown = DB::table('remises')
+        ->join('produits', 'produits.id_rem', '=', 'remises.id_rem')
+        ->join('categories', 'categories.id_ctg', '=', 'produits.id_ctg')
+        ->where('produits.id_rem', '=',  $id)
+        ->select(['remises.*', 'produits.*', 'categories.nom as nom_ctg'])
+        ->get();
+// dd($markdown[0]->id_rem);
+        return view('admin.dashboard.markdown.show', ['markdowns' =>$markdown]);
     }
 
     /**
@@ -60,7 +68,10 @@ class MarkDownController extends Controller
      */
     public function edit($id)
     {
-        //
+        $markdown = MarkDown::where('id_rem', '=',  $id)
+                        ->firstOrfail();
+
+        return view('admin.dashboard.markdown.edit', ['markdown' =>$markdown]);
     }
 
     /**
@@ -83,6 +94,12 @@ class MarkDownController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $item = MarkDown::where('id_rem', '=', $id)->firstORfail();
+        Product::where('id_rem', '=', $id)
+                ->update(['id_rem' => 1]);
+
+        MarkDown::where('id_rem', '=', $id)->delete();
+
+        return back()->with('success', 'The mark downd was deleted successfuly');
     }
 }

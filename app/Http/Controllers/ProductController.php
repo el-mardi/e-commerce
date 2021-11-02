@@ -52,7 +52,22 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        
+        $validation= $request->validate([
+
+            "category" => 'required',
+            "mark-Down" => '',
+            'new-mark-down'=>'',
+            "porcentage" => '',
+            "end_at" => '',
+            "start_at" => '',
+            "name" => 'required',
+            "price" => 'required',
+            "quantite" => 'required',
+            "description" => 'required',
+        ]);
+
+        dd($validation);
+
     }
 
     /**

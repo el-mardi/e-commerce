@@ -103,7 +103,7 @@ $(document).ready(function(){
         var category = $("#category_for_new_order option:selected").val();
         var product = $("#product_for_new_order option:selected").val();
         var quantite = $("#quantite_for_new_order").val();
-        if (category === "" || product ==="" || quantite ==="") {
+        if ( product ==="" || quantite ==="") {
             $("#errors").css('display','block').attr('class', 'alert alert-danger border').html("Please fill the formule");
         }else{
 

@@ -49,7 +49,7 @@
         <td>{{$order[0]->date}}</td>
         <td><a href="{{route('order.show', $order[0]->id_cmd)}}" class="link-primary"><i class="fas fa-eye"></i></a></td>
         <td>
-                <form action="" method="POST">
+        <form action="{{route('order.destroy',  $order[0]->id_cmd)}}" method="POST">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-link" style="color: red"><i class="fas fa-minus-square"></i></button>
